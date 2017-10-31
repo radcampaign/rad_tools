@@ -13,8 +13,8 @@ class RadTools {
    * A shortcut for entity queries.
    *
    * @param string $bundle
-   *   A string representing the name of a bundle. A node type if $node is
-   *   omitted.
+   *   A string representing the name of a bundle. A node type if
+   *   $entity_type is omitted.
    * @param string $entity_type
    *   A string representing the type of entity to be queried. Defaults to
    *   'node'.
