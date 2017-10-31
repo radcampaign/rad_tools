@@ -1,0 +1,16 @@
+{
+    "name": "radcampaign/rad_tools",
+    "description": "Utilities for Rad developers.",
+    "type": "drupal-module",
+    "require": {
+        "composer/installers": "^1.4"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Xaq Rothman",
+            "email": "xaq@radcampaign.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}

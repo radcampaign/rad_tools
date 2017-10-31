@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains rad_tools.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function rad_tools_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the rad_tools module.
+    case 'help.page.rad_tools':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Utilities for Rad developers.') . '</p>';
+      return $output;
+
+    default:
+  }
+}

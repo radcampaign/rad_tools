@@ -1,0 +1,5 @@
+name: rad_tools
+type: module
+description: Utilities for Rad developers.
+core: 8.x
+package: Rad
