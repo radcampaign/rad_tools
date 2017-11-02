@@ -24,7 +24,7 @@ class RadTools {
    *   bundle condition.
    */
   public static function entityQuery(string $bundle, string $entity_type = 'node') {
-    return \Drupal::entityQuery($entity_type)->condition('bundle', $bundle);
+    return \Drupal::entityQuery($entity_type)->condition('type', $bundle);
   }
 
   /**
