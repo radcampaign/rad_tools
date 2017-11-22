@@ -62,12 +62,17 @@ class RadTools {
    * @param  mixed $message anything that can be logged.
    * @return void
    */
-  public static function log($message, $customType = '') {
+  public static function log($message, $customType = '', $pretty = true) {
     if ($message === NULL) {
       $message = 'NULL';
     }
     if (gettype($message) !== 'string') {
-       $message = json_encode($message, JSON_PRETTY_PRINT);
+      if($pretty){
+        $message = json_encode($message, JSON_PRETTY_PRINT);
+      }
+      else {
+       $message = json_encode($message);
+      }
     }
     if(empty($customType))
       $customType = 'rad';
