@@ -60,6 +60,8 @@ class RadTools {
    * type is set to 'rad' but that can be changed by padding a seecond
    * value to the logger.
    * @param  mixed $message anything that can be logged.
+   * @param  string $customType The type for the ws log that you want to pass to ws.
+   * @param  boolean $pretty If we are printing a json_encoded message, do we want it to be pretty.
    * @return void
    */
   public static function log($message, $customType = '', $pretty = true) {
