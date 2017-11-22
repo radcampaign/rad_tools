@@ -43,9 +43,9 @@ class RadTools {
    *   first item for the field.
    */
   public static function getFirstValue(EntityInterface $entity, string $field_name, string $column = 'value') {
-    $value = '';
-    if ($value = $entity->get($field_name)->first()) {
-      $value = $value->getValue();
+    $value = NULL;
+    if ($entity->hasField($field_name)) {
+      $value = $entity->get($field_name)->first()->getValue();
       // Set column to FALSE to return the array.
       if ($column) {
         return $value[$column];
