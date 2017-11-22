@@ -68,6 +68,7 @@ class RadTools {
     if ($message === NULL) {
       $message = 'NULL';
     }
+
     if (gettype($message) !== 'string') {
       if($pretty){
         $message = json_encode($message, JSON_PRETTY_PRINT);
@@ -76,10 +77,30 @@ class RadTools {
        $message = json_encode($message);
       }
     }
+
     if(empty($customType))
       $customType = 'rad';
 
     \Drupal::logger($customType)->notice($message);
+  }
+
+  /**
+   * Ever wished there was  away to find out what crazy class you are inheriting
+   * from the depths of the evil drupal core? Have you ever been stuck wondering
+   * why you can't print the values of what you thought was an array and all you
+   * got in watch dog was '@' signs? Have you ever been stuck and just not sure
+   * what to google? Have you stared deep into the dark blackness of drupal core
+   * only to find yourself staring back at you and realizing that you are tired,
+   * hungry, alone and on the verge of tears? Well here's a tiny tourch to help
+   * brightened your path.
+   *
+   * @param  object $object
+   */
+  public static function getInstance($object) {
+    if(gettype($object) == 'object')
+      return get_class($object);
+
+    return gettype($object);
   }
 
 }
