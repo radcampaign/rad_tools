@@ -54,4 +54,25 @@ class RadTools {
     return $value;
   }
 
+  /**
+   * A helpful logger function that allows developers to easily send
+   * data to the drupal watchdog service. By default, it is a noice and the
+   * type is set to 'rad' but that can be changed by padding a seecond
+   * value to the logger.
+   * @param  mixed $message anything that can be logged.
+   * @return void
+   */
+  public static function log($message, $customType = '') {
+    if ($message === NULL) {
+      $message = 'NULL';
+    }
+    if (gettype($message) !== 'string') {
+       $message = json_encode($message, JSON_PRETTY_PRINT);
+    }
+    if(empty($customType))
+      $customType = 'rad';
+
+    \Drupal::logger($customType)->notice($message);
+  }
+
 }
