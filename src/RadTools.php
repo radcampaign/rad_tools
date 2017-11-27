@@ -28,6 +28,22 @@ class RadTools {
   }
 
   /**
+   * Return TRUE if an entity has any values for a field.
+   *
+   * @param Drupal\Core\Entity\EntityInterface $entity
+   *   The entity to check for values.
+   * @param string $field_name
+   *   The machine name of the field to check for values.
+   *
+   * @return bool
+   *   TRUE if the entity has values for the field, FALSE if the entity lacks
+   *   that field, or has no values.
+   */
+  public static function hasFieldValue(EntityInterface $entity, string $field_name) {
+    return $entity->hasField($field_name) && $entity->get($field_name)->count();
+  }
+
+  /**
    * Return the first value of a field on an entity.
    *
    * @param Drupal\Core\Entity\EntityInterface $entity
@@ -43,9 +59,9 @@ class RadTools {
    *   first item for the field.
    */
   public static function getFirstValue(EntityInterface $entity, string $field_name, string $column = 'value') {
-    $value = '';
-    if ($value = $entity->get($field_name)->first()) {
-      $value = $value->getValue();
+    $value = NULL;
+    if (self::hasFieldValue($entity, $field_name)) {
+      $value = $entity->get($field_name)->first()->getValue();
       // Set column to FALSE to return the array.
       if ($column) {
         return $value[$column];
