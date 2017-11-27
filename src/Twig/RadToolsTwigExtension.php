@@ -71,14 +71,21 @@ class RadToolsTwigExtension extends \Twig_Extension {
         font-weight: bold;
         cursor: pointer;
         margin: 10px 0;
+        text-decoration: underline;
       }
       #rdebug-$id button {
         margin: 10px 0;
       }
+      #rdebug-$id .rdebug-values {
+        max-height: 350px;
+        max-width: 450px;
+        overflow: auto;
+      }
       </style>
       <script type=\"text/javascript\">
-        function RDebugHideThis$id(elem) {
-          var children = elem.childNodes;
+        function RDebugHideThis$id(id) {
+          var elem = document.getElementById(id),
+              children = elem.childNodes;
           for(var i = 0; i < children.length; i++) {
             if(children[i].className == 'rdebug-values') {
               children[i].style.display = children[i].style.display == 'none' ? 'block' : 'none';
@@ -91,9 +98,9 @@ class RadToolsTwigExtension extends \Twig_Extension {
         }
       </script>
     ";
-    $html .= '<div class="rdebug-wrapper" id="rdebug-' . $id . '" onclick="RDebugHideThis' . $id .'(this)">'; // start wrapper
+    $html .= '<div class="rdebug-wrapper" id="rdebug-' . $id . '">'; // start wrapper
 
-    $html .= "<div class=\"rdebug-title\">$name KEYS: </div>";
+    $html .= "<div class=\"rdebug-title\" onclick=\"RDebugHideThis$id('rdebug-$id')\">$name Keys & Values</div>";
     $html .= '<div class="rdebug-values">';
     if (is_array($array)) {
       foreach($array as $key => $value) {
