@@ -18,7 +18,7 @@ class RadToolsTwigExtension extends \Twig_Extension {
    */
   public function getFunctions() {
     return [
-      $this->makeSimpleFunc('print_keys'),
+      $this->makeSimpleFunc('rdebug'),
       $this->makeSimpleFunc('get_instance'),
     ];
   }
@@ -35,7 +35,7 @@ class RadToolsTwigExtension extends \Twig_Extension {
       );
   }
 
-  public function print_keys($array, $name = '') {
+  public function rdebug($array, $name = '') {
 
     $html = "<br><div>$name KEYS: </div><br>";
     if (is_array($array)) {
