@@ -90,13 +90,19 @@ class RadTools {
     }
 
     $output = '';
-    if (gettype($message) !== 'string') {
+    if (gettype($message) == 'object') {
+      $output = self::getInstance($message);
+    }
+    else if (gettype($message) !== 'string') {
       if($pretty){
         $output = json_encode($message, JSON_PRETTY_PRINT);
       }
       else {
        $output = json_encode($message);
       }
+    }
+    else {
+      $output = $message;
     }
 
     if ( (empty($output) || $output == '') && is_array($message) && count($message) > 0) {
@@ -112,6 +118,7 @@ class RadTools {
         $output = json_encode($tmp);
       }
     }
+
 
 
     self::runLog($output, $customType);
@@ -139,6 +146,7 @@ class RadTools {
 
     return $gInstance;
   }
+
   private static function runLog(string $message, string $type) {
     \Drupal::logger($type)->notice($message);
   }
