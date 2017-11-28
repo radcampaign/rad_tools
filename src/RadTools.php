@@ -81,23 +81,66 @@ class RadTools {
    * @return void
    */
   public static function log($message, $customType = '', $pretty = true) {
-    if ($message === NULL) {
-      $message = 'NULL';
-    }
-
-    if (gettype($message) !== 'string') {
-      if($pretty){
-        $message = json_encode($message, JSON_PRETTY_PRINT);
-      }
-      else {
-       $message = json_encode($message);
-      }
-    }
-
     if(empty($customType))
       $customType = 'rad';
 
-    \Drupal::logger($customType)->notice($message);
+    if ($message === NULL) {
+      $message = 'NULL';
+      self::runLog('NULL', $customType);
+    }
+
+    $output = '';
+    if (gettype($message) !== 'string') {
+      if($pretty){
+        $output = json_encode($message, JSON_PRETTY_PRINT);
+      }
+      else {
+       $output = json_encode($message);
+      }
+    }
+
+    if ( (empty($output) || $output == '') && is_array($message) && count($message) > 0) {
+      $tmp = [];
+      foreach ($message as $key => $value) {
+        $tmp[$key] = self::processInstance($value);
+      }
+
+      if ($pretty){
+        $output = json_encode($tmp, JSON_PRETTY_PRINT);
+      }
+      else {
+        $output = json_encode($tmp);
+      }
+    }
+
+
+    self::runLog($output, $customType);
+  }
+
+  /**
+   * Provides a useful way of outputing instance information for
+   * values in associative arrays of mixed values.
+   * @param  mixed $value Anything that might we want to derrive info for.
+   * @return string - type and info about whats inside.
+   */
+  private static function processInstance($value) {
+    $gInstance = self::getInstance($value);
+    // if our instance is an array or string
+    // we can go ahead and extract some helpful info
+    // and print it out.
+    switch($gInstance) {
+      case 'array':
+         $gInstance .= '[' . count($value) . ']';
+         break;
+      case 'string':
+        $gInstance .= " => '" . $value . "'";
+        break;
+    }
+
+    return $gInstance;
+  }
+  private static function runLog(string $message, string $type) {
+    \Drupal::logger($type)->notice($message);
   }
 
   /**

@@ -104,17 +104,11 @@ class RadToolsTwigExtension extends \Twig_Extension {
     $html .= '<div class="rdebug-values">';
     if (is_array($array)) {
       foreach($array as $key => $value) {
-        $gInstance = Tools::getInstance($value);
-        // if our instance is an array or string
-        // we can go ahead and extract some helpful info
-        // and print it out.
-        switch($gInstance) {
-          case 'array':
-             $gInstance .= '[' . count($value) . ']';
-             break;
-          case 'string':
-            $gInstance .= " => '" . $value . "'";
-            break;
+
+        $gInstance = Tools::processInstance($value);
+        // in the case of classes, processInstance outputs an array
+        if(is_array($gInstance)) {
+          $gInstance = json_encode($gInstance, JSON_PRETTY_PRINT);
         }
 
         $html .= '<strong>' . $key . ': </strong>' . $gInstance;
