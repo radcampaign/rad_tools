@@ -130,7 +130,7 @@ class RadTools {
    * @param  mixed $value Anything that might we want to derrive info for.
    * @return string - type and info about whats inside.
    */
-  private static function processInstance($value) {
+  public static function processInstance($value) {
     $gInstance = self::getInstance($value);
     // if our instance is an array or string
     // we can go ahead and extract some helpful info
