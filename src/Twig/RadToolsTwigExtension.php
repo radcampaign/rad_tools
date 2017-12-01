@@ -52,77 +52,36 @@ class RadToolsTwigExtension extends \Twig_Extension {
    * @return string        The full output html to print to the screen.
    */
   public function rdebug($array, $name = '') {
-    $id = rand();
-    $html = '';
 
-    $html .= "
-      <style type=\"text/css\">
-      #rdebug-$id {
-        position: fixed;
-        top: 5px;
-        left: 5px;
-        border: 1px solid black;
-        border-radius: 5%;
-        background-color: white;
-        padding: 15px;
-        z-index: 9999;
-      }
-      #rdebug-$id .rdebug-title {
-        font-weight: bold;
-        cursor: pointer;
-        margin: 10px 0;
-        text-decoration: underline;
-      }
-      #rdebug-$id button {
-        margin: 10px 0;
-      }
-      #rdebug-$id .rdebug-values {
-        max-height: 350px;
-        max-width: 450px;
-        overflow: auto;
-      }
-      </style>
-      <script type=\"text/javascript\">
-        function RDebugHideThis$id(id) {
-          var elem = document.getElementById(id),
-              children = elem.childNodes;
-          for(var i = 0; i < children.length; i++) {
-            if(children[i].className == 'rdebug-values') {
-              children[i].style.display = children[i].style.display == 'none' ? 'block' : 'none';
-            }
-          }
-        }
-
-        function RDebugCloseThis$id(id) {
-          document.getElementById(id).remove();
-        }
-      </script>
-    ";
-    $html .= '<div class="rdebug-wrapper" id="rdebug-' . $id . '">'; // start wrapper
-
-    $html .= "<div class=\"rdebug-title\" onclick=\"RDebugHideThis$id('rdebug-$id')\">$name Keys & Values</div>";
-    $html .= '<div class="rdebug-values">';
     if (is_array($array)) {
+      $tmp = [];
       foreach($array as $key => $value) {
-
         $gInstance = Tools::processInstance($value);
         // in the case of classes, processInstance outputs an array
-        if(is_array($gInstance)) {
-          $gInstance = json_encode($gInstance, JSON_PRETTY_PRINT);
-        }
-
-        $html .= '<strong>' . $key . ': </strong>' . $gInstance;
-        $html .= '<br>';
+        $tmp[$key] =  $gInstance;
       }
+      $array = $tmp;
     }
-    else {
-      $html .= json_encode($array);
-    }
-    $html .= '</div>';
-    $html .= '<div><button onclick="RDebugCloseThis' . $id . '(\'rdebug-' . $id . '\')">Remove</button></div>';
-    $html .= '</div>'; // end class rdebug-wrapper
 
-    return $html;
+    $passThru = json_encode($array);
+
+    $markup = "
+      <script type=\"text/javascript\">
+      // make sure our window var is not undefined
+      if (window._raddebug == undefined) { window._raddebug = []; }
+
+      // append our data to rad debug var
+      if(window._raddebug['$name'] !== undefined) {
+        window._raddebug['$name'] = [window._raddebug['$name']];
+        window._raddebug['$name'].push($passThru);
+      }
+      else {
+        window._raddebug['$name'] = $passThru;
+      }
+      </script>
+    ";
+
+    return $markup;
   }
 
   /**

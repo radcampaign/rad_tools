@@ -1,0 +1,24 @@
+#rdebug-wrapper {
+  position: fixed;
+  top: 5px;
+  left: 5px;
+  border: 1px solid black;
+  border-radius: 5%;
+  background-color: white;
+  padding: 15px;
+  z-index: 9999;
+}
+#rdebug-wrapper .rdebug-title {
+  font-weight: bold;
+  cursor: pointer;
+  margin: 10px 0;
+  text-decoration: underline;
+}
+#rdebug-wrapper button {
+  margin: 10px 0;
+}
+#rdebug-wrapper .rdebug-values {
+  max-height: 350px;
+  max-width: 450px;
+  overflow: auto;
+}
