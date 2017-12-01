@@ -4,6 +4,10 @@
     var win = $('<div #id="rdebug-wrapper"></div>'),
         values = window._raddebug;
 
+    if (values === undefined) {
+      return false;
+    }
+
     win.attr('id', 'rdebug-wrapper');
     for (key in values) {
       var div = $('<div class="rdebug-values" style="display:none"></div>')
