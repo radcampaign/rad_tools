@@ -22,3 +22,12 @@ function rad_tools_help($route_name, RouteMatchInterface $route_match) {
     default:
   }
 }
+
+/**
+ * Implements hook_page_attachments_alter() to attach our js libraries to the page
+ * @param  array  &$page [description]
+ * @return [type]        [description]
+ */
+function rad_tools_page_attachments_alter(array &$page) {
+  $page['#attached']['library'][] = 'rad_tools/rdebug';
+}

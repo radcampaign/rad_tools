@@ -1,0 +1,5 @@
+services:
+  rad_tools_twig.twig.rad_tools_twig_extension:
+    class: Drupal\rad_tools\Twig\RadToolsTwigExtension
+    tags:
+      - { name: twig.extension }

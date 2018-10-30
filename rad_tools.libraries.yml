@@ -1,0 +1,9 @@
+rdebug:
+  version: 1.x
+  css:
+    theme:
+      css/debug.dev.css: {}
+  js:
+    js/debug.dev.js: {}
+  dependencies:
+    - core/jquery
